@@ -7,6 +7,10 @@ inputs = {
   "aadcbb" => "neither"
 }
 
+book_path = File.expand_path('../../the-book.txt', __dir__)
+
+inputs[File.read(book_path)] = "odd"
+
 results = {}
 
 inputs.keys.each do |word|
@@ -35,9 +39,12 @@ inputs.keys.each do |word|
     'neither'
   end
 
+  title = word[0..15]
+  title += '...' if word.length > 16
+
   if result == inputs[word]
-    puts "✓ '#{word}' is #{result.upcase}, as expected\n\n"
+    puts "✓ '#{title}' is #{result.upcase}, as expected\n\n"
   else
-    puts "× #{word} is #{result.upcase}, but should have been #{inputs[word].upcase}\n\n"
+    puts "× #{title} is #{result.upcase}, but should have been #{inputs[word].upcase}\n\n"
   end
 end
