@@ -7,6 +7,9 @@ inputs = {
   "aadcbb" => "neither"
 }
 
+file_content = File.read(Dir.pwd + '/the-book.txt')
+inputs[file_content] = '?'
+
 inputs.each do |(str, expected)|
   puts "calculating string '#{str}'"
   h = Hash.new(0)
