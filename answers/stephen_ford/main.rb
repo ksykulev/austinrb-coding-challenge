@@ -25,6 +25,10 @@ class PalindromeCheckerTest < Minitest::Test
     assert_equal(EvenOddCheck.new("").iterate_over_string("caab"), :odd)
   end
 
+  def test_single_double_character_avoid_casing_issues_and_even
+    assert_equal(EvenOddCheck.new("").iterate_over_string("caabB"), :even)
+  end
+
   def test_single_double_character_and_single_characters_is_odd
     assert_equal(EvenOddCheck.new("").iterate_over_string("baabc"), :even)
   end
@@ -49,7 +53,7 @@ class EvenOddCheck
   end
 
   def iterate_over_string(string, determine: true)
-    string.delete(" ").gsub(/[^a-zA-Z]/, '').each_char do |char|
+    string.gsub(/[^a-zA-Z]/, '').downcase.each_char do |char|
       @character_counts[char] ||= 0
       @character_counts[char] += 1
     end
@@ -60,7 +64,6 @@ class EvenOddCheck
     File.open(@file_path, "r").each_line do |line|
       line.scan(/.{1,#{chunk_size}}/m).each { |chunk| iterate_over_string(chunk, determine: false) }
     end
-    puts @character_counts
     determine_oddity
   end
 
